@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MiniCoder Training Dashboard</title>
+  <link rel="stylesheet" href="/dashboard/static/style.css">
+</head>
+<body>
+  <main>
+    <header><h1>MiniCoder Training Dashboard</h1><span id="status" class="badge">idle</span></header>
+    <section class="cards">
+      <div><b>Global step</b><strong id="step">-</strong></div>
+      <div><b>Loss</b><strong id="loss">-</strong></div>
+      <div><b>Tokens/s</b><strong id="tps">-</strong></div>
+      <div><b>PID</b><strong id="pid">-</strong></div>
+      <div><b>Provider / GPU</b><strong id="device">-</strong></div>
+      <div><b>VRAM used / total</b><strong id="vram">-</strong></div>
+      <div><b>RAM used / total</b><strong id="ram">-</strong></div>
+      <div><b>GPU utilization</b><strong id="gpuUtil">-</strong></div>
+      <div><b>Learning rate</b><strong id="learningRate">-</strong></div>
+      <div><b>Tokens seen</b><strong id="tokensSeen">-</strong></div>
+      <div><b>ETA (s)</b><strong id="eta">-</strong></div>
+      <div><b>Checkpoint</b><strong id="checkpointStatus">-</strong></div>
+    </section>
+    <section class="panel">
+      <h2>Training control</h2>
+      <div class="form">
+        <label>Model config <input id="config" value="config/model_tiny.yaml"></label>
+        <label>Train config <input id="trainConfig" placeholder="config/train_small.yaml"></label>
+        <label>Run directory <input id="runDir" value="runs/dashboard"></label>
+        <label>Remote control token (optional) <input id="apiToken" type="password" autocomplete="off" placeholder="Not saved"></label>
+        <label>GPU cost rate (USD/hour; optional) <input id="costRate" type="number" min="0" step="0.0001" placeholder="Free/local: leave blank"></label>
+        <label>Estimated GPU budget cap (USD) <input id="costBudget" type="number" min="0" step="0.01" placeholder="Required with cost rate"></label>
+        <label class="check"><input id="confirmCost" type="checkbox"> I reviewed the current price and approve this estimated GPU-compute spend</label>
+      </div>
+      <p>유료 작업은 기본 비활성화입니다. 요금 입력은 GPU 컴퓨트의 추정 상한일 뿐 컨테이너 시작·CPU/RAM·저장·네트워크·세금 등 공급자 청구 전체의 보장 상한은 아닙니다. 기본 서버는 loopback에서만 제어할 수 있고, 원격 제어에는 MINICODER_DASHBOARD_TOKEN이 필요합니다.</p>
+      <div class="buttons">
+        <button id="start">Start</button><button id="pause">Pause</button>
+        <button id="resume">Resume</button><button id="checkpoint">Save checkpoint</button>
+        <button id="restore">Restore latest checkpoint</button><button id="export">Export model</button>
+        <button id="stop" class="danger">Stop</button>
+      </div>
+      <p id="checkpointPath">Checkpoint path: -</p>
+      <p>Provider switching is not offered here: the backend has no verified API to launch another provider's notebook. Use a provider notebook manually and move verified checkpoints through its mounted/output storage.</p>
+      <pre id="message"></pre>
+    </section>
+    <section class="panel">
+      <h2>Workers</h2>
+      <table><thead><tr><th>ID</th><th>Provider</th><th>GPU</th><th>VRAM MB</th><th>Network</th><th>Backend</th><th>Status</th></tr></thead><tbody id="workers"></tbody></table>
+    </section>
+    <section class="panel">
+      <h2>Provider runtime inspection (this process only)</h2>
+      <table><thead><tr><th>Provider</th><th>Runtime</th><th>GPU observed</th><th>RAM</th><th>Storage free</th><th>CUDA / PyTorch</th><th>Remote jobs</th></tr></thead><tbody id="providers"></tbody></table>
+    </section>
+    <section class="panel">
+      <h2>Kaggle official CLI job (optional; user account credentials required)</h2>
+      <div class="form">
+        <label>Project-relative kernel directory<input id="kaggleDir" value="kaggle_submission"></label>
+        <label>Kaggle kernel ID<input id="kaggleId" placeholder="owner/kernel-slug"></label>
+        <label>Output directory<input id="kaggleOutputDir" value="runs/kaggle_output"></label>
+        <label>Reviewed kernel-metadata.json<textarea id="kaggleMetadata" rows="7" cols="50" placeholder='{"id":"owner/kernel-slug","title":"MiniCoder run","code_file":"minicoder.ipynb","language":"python","kernel_type":"notebook","is_private":true,"enable_gpu":true,"enable_internet":false,"dataset_sources":[]} '></textarea></label>
+      </div>
+      <label class="check"><input id="confirmKaggle" type="checkbox"> I reviewed this Kaggle kernel and confirm submit (may consume my account GPU quota)</label>
+      <div class="buttons">
+        <button id="kagglePrepare">Prepare metadata</button><button id="kaggleSubmit">Submit Kaggle run</button>
+        <button id="kaggleStatus">Check status</button><button id="kaggleOutput">Download output</button>
+      </div>
+      <p>This uses the documented official Kaggle CLI `kernels push/status/output`; it requires the CLI and your preconfigured Kaggle credentials on the dashboard host. No credentials are collected here. Submission is not automatic. Colab runs inside the separately user-started notebook unless its official OAuth/API integration is explicitly configured.</p>
+    </section>
+    <section class="panel"><h2>Recent metrics</h2><pre id="metrics">No metrics yet</pre></section>
+  </main>
+  <script src="/dashboard/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Data pipeline config. Record a real license for every source; unknown-license samples are excluded by default.
+sources:
+  - {path: data/raw/my_code, name: my_code, license: "MIT", task: code}
+  # - {path: data/raw/instructions.jsonl, name: my_instructions, license: "CC-BY-4.0", task: instruction}
+out_dir: data/processed
+val_ratio: 0.02
+seed: 1337
+min_quality: 0.45
+near_dup: true
+near_dup_threshold: 0.85
+allowed_licenses: []          # e.g. ["MIT", "Apache-2.0", "BSD-3-Clause"]
+drop_unknown_license: true
+balance_by: lang              # lang | task | null
+balance_targets: {python: 0.4, javascript: 0.15, cpp: 0.15, csharp: 0.1, lua: 0.1, typescript: 0.1}
+drop_unlisted: false

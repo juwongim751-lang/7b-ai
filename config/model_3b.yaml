@@ -1,0 +1,11 @@
+model_name: "MiniCoder-3B"
+parameters:
+  vocab_size: 32000
+  hidden_size: 3072
+  num_layers: 24
+  num_heads: 24
+  num_kv_heads: 8
+  intermediate_size: 9728
+  max_position_embeddings: 2048
+  precision: "bf16"
+  gradient_checkpointing: true

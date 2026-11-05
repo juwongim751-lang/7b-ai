@@ -1,0 +1,12 @@
+# Approximately 16.3M parameters; larger than the legacy sub-million-parameter smoke preset.
+model_name: "MiniCoder-tiny-16m"
+parameters:
+  vocab_size: 8192
+  hidden_size: 384
+  num_layers: 3
+  num_heads: 12
+  num_kv_heads: 3
+  intermediate_size: 768
+  max_position_embeddings: 1024
+  tie_word_embeddings: false
+  precision: "bf16"

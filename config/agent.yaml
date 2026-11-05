@@ -1,0 +1,14 @@
+# Phase 7~10 coding-agent configuration example
+# API keys must come from environment variables, never from this file.
+provider: ollama
+model: qwen2.5-coder:7b
+base_url: http://127.0.0.1:11434
+# provider choices: ollama, openai_compatible, anthropic, gemini, nvidia_nim, minicoder
+agent:
+  repository_root: .
+  index_dir: .minicoder_index
+  memory_path: .minicoder_memory.sqlite
+  command_timeout_seconds: 30
+  test_retries: 1
+  context_max_chars: 24000
+  approval_required_for_writes: true

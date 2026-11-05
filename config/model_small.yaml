@@ -1,0 +1,7 @@
+# ~100M-class config for single-GPU validation runs.
+model_name: "MiniCoder-small"
+preset: small
+training:
+  precision: "bf16"
+  warmup_steps: 500
+  max_steps: 20000

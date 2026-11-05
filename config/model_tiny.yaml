@@ -1,0 +1,3 @@
+# CPU-friendly config for pipeline verification. NOT a useful model.
+model_name: "MiniCoder-tiny"
+preset: tiny

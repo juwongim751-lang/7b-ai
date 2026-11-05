@@ -1,0 +1,3 @@
+# Small correctness-first BitLinear/QAT preset. Not a quality or speed benchmark.
+model_name: "MiniCoder-bitnet-tiny"
+preset: bitnet_tiny

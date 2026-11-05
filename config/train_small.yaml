@@ -1,0 +1,13 @@
+# Single-GPU validation run (8GB VRAM class). Values are starting points, NOT measured/tuned.
+data_dir: data/processed
+run_dir: runs/small
+seq_len: 512
+micro_batch_size: 4
+grad_accum: 8
+max_steps: 5000
+learning_rate: 0.0006
+warmup_steps: 200
+eval_every: 250
+save_every: 500
+precision: bf16
+gradient_checkpointing: true

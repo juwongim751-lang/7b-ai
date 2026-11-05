@@ -1,0 +1,57 @@
+# Static capability declarations; actual runtime state is detected separately.
+# No provider here is remotely launched or quota-inspected by default.
+providers:
+  local:
+    runtime_detection: true
+    gpu_training: true  # only when an active local torch.cuda runtime exists
+    long_running: unknown
+    persistent_storage: true  # local disk only; durability depends on filesystem
+    external_storage: false
+    inference: true
+    remote_job_submission: false
+    quota_visibility: false
+  colab:
+    runtime_detection: true
+    gpu_training: true  # only inside an allocated notebook runtime with CUDA
+    long_running: false
+    persistent_storage: false
+    external_storage: true  # only after the user mounts Google Drive
+    inference: true
+    remote_job_submission: false
+    quota_visibility: false
+  kaggle:
+    runtime_detection: true
+    gpu_training: true  # only inside an allocated notebook runtime with CUDA
+    long_running: false
+    persistent_storage: false
+    external_storage: true  # only for user-published output / attached datasets
+    inference: true
+    remote_job_submission: false
+    quota_visibility: false
+  lightning:
+    runtime_detection: true
+    gpu_training: true  # only inside a user-started Studio with CUDA
+    long_running: unknown
+    persistent_storage: unknown
+    external_storage: false
+    inference: true
+    remote_job_submission: false
+    quota_visibility: false
+  huggingface_zerogpu:
+    runtime_detection: true
+    gpu_training: false
+    long_running: false
+    persistent_storage: false
+    external_storage: false
+    inference: true  # short inference/demo/evaluation within platform limits
+    remote_job_submission: false
+    quota_visibility: false
+  modal:
+    runtime_detection: true
+    gpu_training: true  # only after user explicitly starts a billable function
+    long_running: true
+    persistent_storage: true  # requires a user-provisioned Volume
+    external_storage: true
+    inference: true
+    remote_job_submission: false  # code requires explicit cost approval to opt in
+    quota_visibility: false
